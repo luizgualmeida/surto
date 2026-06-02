@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SURTO! — Sell Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal-deep: #0a3d3d;
+    --teal-mid: #1a6b5a;
+    --teal-bright: #2ab8a0;
+    --teal-glow: #3de8c8;
+    --gold: #e8b84b;
+    --gold-light: #f5d07a;
+    --red: #c0392b;
+    --red-light: #e74c3c;
+    --bg: #06242a;
+    --surface: #0d3540;
+    --surface2: #112d38;
+    --text: #d4ede8;
+    --text-dim: #7ab5a8;
+    --white: #ffffff;
+    --border: rgba(42, 184, 160, 0.25);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(42,184,160,0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(42,184,160,0); }
+  }
+  @keyframes virusSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes scanline {
+    0% { top: -40px; }
+    100% { top: 100%; }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Scanline texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 0 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: linear-gradient(160deg, #061e22 0%, #0a3d3d 40%, #093328 100%);
+    border-bottom: 3px solid var(--gold);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 50%, rgba(42,184,160,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(192,57,43,0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 40px;
+    padding: 48px 52px 40px;
+  }
+
+  .hero-virus {
+    font-size: 96px;
+    line-height: 1;
+    animation: virusSpin 30s linear infinite;
+    opacity: 0.12;
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    pointer-events: none;
+  }
+
+  .game-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 100px;
+    letter-spacing: 4px;
+    color: var(--white);
+    line-height: 0.9;
+    text-shadow: 0 0 60px rgba(42,184,160,0.4), 0 4px 0 rgba(0,0,0,0.5);
+  }
+  .game-subtitle {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    margin-top: 4px;
+  }
+  .game-tagline {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--teal-bright);
+    margin-top: 12px;
+    letter-spacing: 1px;
+    opacity: 0.9;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.7s 0.1s ease both;
+    opacity: 0;
+  }
+  .stat {
+    padding: 18px 12px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    background: rgba(0,0,0,0.25);
+    transition: background 0.2s;
+  }
+  .stat:last-child { border-right: none; }
+  .stat:hover { background: rgba(42,184,160,0.06); }
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--teal-bright);
+    text-transform: uppercase;
+    display: block;
+  }
+  .stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--white);
+    display: block;
+    letter-spacing: 2px;
+    line-height: 1.1;
+  }
+  .stat-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    display: block;
+    font-style: italic;
+  }
+
+  /* ─── CONTENT ─── */
+  .content {
+    padding: 0 40px;
+  }
+
+  .section {
+    margin-top: 40px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .section-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--teal-mid);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 3px;
+    color: var(--white);
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--teal-mid), transparent);
+  }
+
+  /* Premise */
+  .premise-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--teal-bright);
+    border-radius: 4px;
+    padding: 24px 28px;
+    color: var(--text);
+    line-height: 1.75;
+  }
+  .premise-box p + p {
+    margin-top: 14px;
+  }
+  .premise-box em {
+    color: var(--gold-light);
+    font-style: italic;
+  }
+
+  /* Feature cards */
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 22px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--teal-bright);
+    opacity: 0.5;
+  }
+  .feature-card:hover {
+    border-color: rgba(42,184,160,0.5);
+    transform: translateY(-2px);
+  }
+  .feature-card.full { grid-column: 1 / -1; }
+  .feature-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+  .feature-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--teal-glow);
+    margin-bottom: 6px;
+  }
+  .feature-desc {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* FLICC pills */
+  .flicc-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .flicc-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(42,184,160,0.1);
+    border: 1px solid rgba(42,184,160,0.3);
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--teal-glow);
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+  }
+  .flicc-letter {
+    background: var(--teal-mid);
+    color: var(--white);
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0;
+    flex-shrink: 0;
+  }
+
+  /* Two-column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .col-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 22px 24px;
+  }
+  .col-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal-bright);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .col-box ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .col-box li {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .col-box li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal-bright);
+    font-size: 11px;
+  }
+
+  /* Game features checklist */
+  .features-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .feat-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--surface2);
+    padding: 10px 14px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    font-size: 13.5px;
+    color: var(--text);
+  }
+  .feat-check {
+    color: var(--teal-bright);
+    font-weight: 700;
+    flex-shrink: 0;
+    font-size: 14px;
+    margin-top: 1px;
+  }
+
+  /* Status badge */
+  .status-section {
+    background: linear-gradient(135deg, rgba(10,61,61,0.8), rgba(9,51,40,0.8));
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 32px;
+  }
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .status-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--text-dim);
+  }
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+    margin-top: 6px;
+    animation: pulse 2s ease infinite;
+  }
+
+  /* Perfect for */
+  .perfect-for {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .pf-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 16px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .pf-card:hover { border-color: var(--gold); }
+  .pf-icon { font-size: 28px; display: block; margin-bottom: 8px; }
+  .pf-text {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 52px;
+    background: linear-gradient(160deg, var(--teal-deep), #061820);
+    border-top: 3px solid var(--gold);
+    padding: 28px 40px;
+    text-align: center;
+  }
+  .footer-tagline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .footer-tagline span { color: var(--teal-bright); }
+  .footer-contact {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+  .footer-contact a { color: var(--teal-bright); text-decoration: none; }
+  .footer-logos {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+  .footer-logos span { padding: 4px 12px; border: 1px solid var(--border); border-radius: 3px; }
+
+  /* Separator */
+  hr.rule {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0 0;
+  }
+
+  @media (max-width: 680px) {
+    .hero-inner { grid-template-columns: 1fr; padding: 32px 24px 24px; }
+    .game-title { font-size: 64px; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .features-grid, .two-col, .features-list, .perfect-for { grid-template-columns: 1fr; }
+    .feature-card.full { grid-column: 1; }
+    .status-grid { grid-template-columns: 1fr; }
+    .content { padding: 0 20px; }
+    .footer { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="game-title">SURTO!</div>
+        <div class="game-subtitle">OUTBREAK!</div>
+        <div class="game-tagline">Investigate the Disease · Stop the Epidemic · Defeat Misinformation</div>
+      </div>
+      <div class="hero-virus">🦠</div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-label">Players</span>
+        <span class="stat-value">2–6</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Play Time</span>
+        <span class="stat-value">45–60</span>
+        <span class="stat-sub">minutes</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Age</span>
+        <span class="stat-value">12+</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Genre</span>
+        <span class="stat-value" style="font-size:18px; margin-top:4px;">Asymmetric Strategy</span>
+        <span class="stat-sub">Educational Board Game</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- PREMISE -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">📖</div>
+        <div class="section-title">The Premise</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="premise-box">
+        <p>A mysterious disease is spreading across Brazil. While the Virus evolves and expands across diverse Brazilian biomes, a team of Scientists races against time to identify symptoms, uncover transmission routes, and contain the outbreak before it becomes a nationwide epidemic.</p>
+        <p><em>But there is another threat. As new evidence emerges, players are confronted with sensational headlines, viral rumors, and misleading claims. To succeed, they must separate science from misinformation using real-world critical thinking tools.</em></p>
+        <p style="margin-top:14px; font-weight:700; color: var(--white);">Will science keep up with the outbreak?</p>
+      </div>
+    </div>
+
+    <!-- WHY SURTO -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">⭐</div>
+        <div class="section-title">Why SURTO! Stands Out</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">🧬</span>
+          <div class="feature-title">Real Epidemiology, Real Science</div>
+          <div class="feature-desc">Inspired by outbreak investigation, surveillance systems, disease ecology, and public health decision-making. Science is embedded in every mechanic.</div>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🇧🇷</span>
+          <div class="feature-title">Unique Brazilian Setting</div>
+          <div class="feature-desc">The game map is based on Brazil's 6 major biomes — Amazon, Cerrado, Atlantic Forest, Caatinga, Pampas, and Pantanal — each creating strategic differences in disease spread and control.</div>
+        </div>
+        <div class="feature-card full">
+          <span class="feature-icon">🧠</span>
+          <div class="feature-title">Critical Thinking Built Into Gameplay — The FLICC Framework</div>
+          <div class="feature-desc" style="margin-bottom:12px;">Every time a Symptom or Transmission card is revealed, a Breaking News card appears. Players must identify the misinformation technique being used to debunk it and gain an advantage.</div>
+          <div class="flicc-row">
+            <div class="flicc-pill"><span class="flicc-letter">F</span> Fake Experts</div>
+            <div class="flicc-pill"><span class="flicc-letter">L</span> Logical Fallacies</div>
+            <div class="flicc-pill"><span class="flicc-letter">I</span> Impossible Expectations</div>
+            <div class="flicc-pill"><span class="flicc-letter">C</span> Cherry Picking</div>
+            <div class="flicc-pill"><span class="flicc-letter">C</span> Conspiracy Theories</div>
+          </div>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🤝</span>
+          <div class="feature-title">Teamwork Under Pressure</div>
+          <div class="feature-desc">Scientists must coordinate limited actions, share discoveries, and make collective decisions — while the Virus player grows stronger each round.</div>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🎓</span>
+          <div class="feature-title">Designed for Classrooms</div>
+          <div class="feature-desc">Includes a companion Scientific Report worksheet and lesson plan covering critical thinking, scientific reasoning, evidence evaluation, collaboration, and problem solving.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME FEATURES -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🎲</div>
+        <div class="section-title">Game Features</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="features-list">
+        <div class="feat-item"><span class="feat-check">✓</span> Asymmetric gameplay (Scientists vs. Virus)</div>
+        <div class="feat-item"><span class="feat-check">✓</span> Disease deduction mechanics</div>
+        <div class="feat-item"><span class="feat-check">✓</span> Cooperative and competitive dynamics</div>
+        <div class="feat-item"><span class="feat-check">✓</span> Misinformation and debunking challenges</div>
+        <div class="feat-item"><span class="feat-check">✓</span> Multiple scientist roles with unique abilities</div>
+        <div class="feat-item"><span class="feat-check">✓</span> High replayability — different viruses, symptoms, and transmissions</div>
+        <div class="feat-item"><span class="feat-check">✓</span> Virus evolution and outbreak system</div>
+        <div class="feat-item"><span class="feat-check">✓</span> Classroom-ready companion materials included</div>
+      </div>
+    </div>
+
+    <!-- EDU + STATUS -->
+    <div class="section">
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-title">📚 Educational Applications</div>
+          <p style="font-size:13px; color:var(--text-dim); margin-bottom:10px; font-style:italic;">Ideal for:</p>
+          <ul>
+            <li>Secondary Education</li>
+            <li>Undergraduate Courses</li>
+            <li>Public Health Programs</li>
+            <li>Science Communication</li>
+            <li>Teacher Training Workshops</li>
+            <li>Critical Thinking Courses</li>
+          </ul>
+          <p style="font-size:13px; color:var(--text-dim); margin-top:14px; margin-bottom:10px; font-style:italic;">Supports discussions on:</p>
+          <ul>
+            <li>Scientific literacy & evidence-based reasoning</li>
+            <li>Health misinformation & epidemiology</li>
+            <li>Public policy and decision-making</li>
+          </ul>
+        </div>
+        <div class="col-box">
+          <div class="col-title">🔬 Development Status</div>
+          <div class="status-grid">
+            <div class="status-item"><div class="status-dot"></div><span>Fully illustrated prototype completed</span></div>
+            <div class="status-item"><div class="status-dot"></div><span>Supported by the Avenues Program</span></div>
+            <div class="status-item"><div class="status-dot"></div><span>Educational pilots beginning 2026</span></div>
+            <div class="status-item"><div class="status-dot"></div><span>Assessment framework in development</span></div>
+          </div>
+          <hr class="rule" style="margin: 18px 0 14px;">
+          <p style="font-size:12px; color:var(--text-dim); font-style:italic; margin-bottom:4px;">Future roadmap includes:</p>
+          <ul style="font-size:13px; color:var(--text-dim); padding-left:0; list-style:none; display:flex; flex-direction:column; gap:5px;">
+            <li style="padding-left:14px; position:relative;">→ More viruses, symptoms, and transmissions</li>
+            <li style="padding-left:14px; position:relative;">→ Bacteria, fungi, and other microorganisms</li>
+            <li style="padding-left:14px; position:relative;">→ Online game version</li>
+            <li style="padding-left:14px; position:relative;">→ Additional maps (US edition shown at LiliCon 2026)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERFECT FOR -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🎯</div>
+        <div class="section-title">Perfect For</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="perfect-for">
+        <div class="pf-card">
+          <span class="pf-icon">📦</span>
+          <div class="pf-text">Publishers seeking meaningful educational games with real-world impact</div>
+        </div>
+        <div class="pf-card">
+          <span class="pf-icon">🏛️</span>
+          <div class="pf-text">Museums and science centers looking for interactive public engagement tools</div>
+        </div>
+        <div class="pf-card">
+          <span class="pf-icon">👩‍🏫</span>
+          <div class="pf-text">Teachers and professors interested in active learning and critical thinking instruction</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-tagline">SURTO! — Where <span>outbreak investigation</span> meets <span>critical thinking</span>.</div>
+    <div class="footer-contact">
+      Contact: <a href="mailto:luiz.almeida@iqc.org.br">luiz.almeida@iqc.org.br</a>
+    </div>
+    <div class="footer-logos">
+      <span>Sponsored by Avenues São Paulo</span>
+      <span>Supported by IQC — Instituto Questão de Ciência</span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
