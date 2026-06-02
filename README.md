@@ -5,11 +5,11 @@
 
 **Um jogo de tabuleiro educativo assimétrico ambientado nos biomas do Brasil**
 
-[![Status](https://img.shields.io/badge/Status-Prototype%20Complete-brightgreen?style=flat-square)](https://github.com)
-[![Players](https://img.shields.io/badge/Players-2–6-blue?style=flat-square)](https://github.com)
-[![Age](https://img.shields.io/badge/Age-12%2B-orange?style=flat-square)](https://github.com)
-[![Play Time](https://img.shields.io/badge/Play%20Time-45–60%20min-purple?style=flat-square)](https://github.com)
-[![Language](https://img.shields.io/badge/Language-PT--BR%20%7C%20EN-lightgrey?style=flat-square)](https://github.com)
+[![Estado atual](https://img.shields.io/badge/Status-Prototype%20Complete-brightgreen?style=flat-square)](https://github.com)
+[![Jogadores](https://img.shields.io/badge/Players-2–6-blue?style=flat-square)](https://github.com)
+[![Idade](https://img.shields.io/badge/Age-12%2B-orange?style=flat-square)](https://github.com)
+[![Duração da partida](https://img.shields.io/badge/Play%20Time-45–60%20min-purple?style=flat-square)](https://github.com)
+[![Idiomas](https://img.shields.io/badge/Language-PT--BR%20%7C%20EN-lightgrey?style=flat-square)](https://github.com)
 
 [🌐 Sell Sheet](https://luizgualmeida.github.io/surto/) · [📧 Contato](mailto:luiz.almeida@iqc.org.br) · [📄 Regras](#regras)
 
