@@ -11,7 +11,7 @@
 [![Play Time](https://img.shields.io/badge/Play%20Time-45–60%20min-purple?style=flat-square)](https://github.com)
 [![Language](https://img.shields.io/badge/Language-PT--BR%20%7C%20EN-lightgrey?style=flat-square)](https://github.com)
 
-[🌐 Sell Sheet](https://SEU-USERNAME.github.io/surto-sellsheet/) · [📧 Contato](mailto:luiz.almeida@iqc.org.br) · [📄 Regras](#regras)
+[🌐 Sell Sheet](https://luizgualmeida.github.io/surto/) · [📧 Contato](mailto:luiz.almeida@iqc.org.br) · [📄 Regras](#regras)
 
 ---
 
