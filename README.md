@@ -3,7 +3,7 @@
 # 🦠 SURTO!
 ### *Investigue a doença, interrompa o Surto e derrote a desinformação*
 
-**An asymmetric educational board game set across Brazil's biomes**
+**Um jogo de tabuleiro educativo assimétrico ambientado nos biomas do Brasil**
 
 [![Status](https://img.shields.io/badge/Status-Prototype%20Complete-brightgreen?style=flat-square)](https://github.com)
 [![Players](https://img.shields.io/badge/Players-2–6-blue?style=flat-square)](https://github.com)
