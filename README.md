@@ -1,7 +1,7 @@
 <div align="center">
 
 # 🦠 SURTO!
-### *Investigate the Disease · Stop the Epidemic · Defeat Misinformation*
+### *Investigue a doença, interrompa o Surto e derrote a desinformação*
 
 **An asymmetric educational board game set across Brazil's biomes**
 
@@ -137,9 +137,9 @@ surto-sellsheet/
 - [x] Protótipo físico completo com ilustrações
 - [x] Playtesting inicial
 - [x] Sell sheet e materiais de apresentação
+- [x] Versão online / digital
 - [ ] Piloto educacional em escolas (2026)
 - [ ] Framework de avaliação de aprendizagem
-- [ ] Versão online / digital
 - [ ] Expansões: bactérias, fungos e outros micro-organismos
 - [ ] Mapa dos Estados Unidos *(apresentado na LiliCon 2026)*
 
@@ -149,27 +149,26 @@ surto-sellsheet/
 
 | | |
 |---|---|
-| **Patrocínio** | Avenues São Paulo |
-| **Apoio** | IQC — Instituto Questão de Ciência |
-| **Apresentado em** | LiliCon 2026 |
+| **Patrocínio** | [Avenues São Paulo](https://www.avenues.org/pt/sp/) |
+| **Apoio** | [IQC — Instituto Questão de Ciência](https://www.iqc.org.br) |
+| **Apresentado em** | [LiliCon 2026](https://www.lilienfeldalliance.org/lilicon) |
 
 ---
 
 ## 📬 Contato
 
-**Luiz Almeida**
-Instituto Questão de Ciência
+**Luiz Gustavo de Almeida**
 
 📧 [luiz.almeida@iqc.org.br](mailto:luiz.almeida@iqc.org.br)
-🌐 [Sell Sheet Online](https://SEU-USERNAME.github.io/surto-sellsheet/)
+🌐 [Sell Sheet Online](https://luizgualmeida.github.io/surto/)
 
 ---
 
 <div align="center">
 
-*SURTO! — Where outbreak investigation meets critical thinking.*
+*SURTO! — Onde a investigação de surtos encontra o pensamento crítico.*
 
 **Interessado em publicar, usar em sala de aula ou cobrir na mídia?**
-[Entre em contato →](mailto:luiz.almeida@iqc.org.br)
+[Entre em contato](mailto:luiz.almeida@iqc.org.br)
 
 </div>
