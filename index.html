@@ -491,9 +491,263 @@
     .content { padding: 0 20px; }
     .footer { padding: 24px 20px; }
   }
+   /* ── Paleta herdada do sell sheet ── */
+  :root {
+    --teal-deep:   #0a3d3d;
+    --teal-bright: #2ab8a0;
+    --teal-glow:   #3de8c8;
+    --gold:        #e8b84b;
+    --bg:          #06242a;
+    --surface:     #0d3540;
+    --text:        #d4ede8;
+    --text-dim:    #7ab5a8;
+    --border:      rgba(42,184,160,0.22);
+  }
+ 
+  /* ══════════════════════════════════
+     SEÇÃO DA GALERIA
+  ══════════════════════════════════ */
+  .gallery-section {
+    padding: 56px 40px 48px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+ 
+  .gallery-section .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .gallery-section .section-icon {
+    width: 36px; height: 36px;
+    background: #1a6b5a;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .gallery-section .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px; letter-spacing: 3px;
+    color: #ffffff;
+  }
+  .gallery-section .section-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, #1a6b5a, transparent);
+  }
+ 
+  /* Grid de fotos */
+  .gal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+ 
+  /* Item padrão */
+  .gal-item {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+    background: var(--surface);
+  }
+ 
+  /* Item em destaque — ocupa 2 colunas na primeira linha */
+  .gal-item.featured {
+    grid-column: span 2;
+    aspect-ratio: 16/9;
+  }
+ 
+  .gal-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease, filter 0.35s ease;
+    filter: brightness(0.92) saturate(0.9);
+  }
+ 
+  .gal-item:hover img {
+    transform: scale(1.04);
+    filter: brightness(1) saturate(1.1);
+  }
+ 
+  /* Overlay com caption ao hover */
+  .gal-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(6,24,26,0.85) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 14px;
+  }
+  .gal-item:hover .gal-overlay { opacity: 1; }
+ 
+  .gal-caption {
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px; font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.4px;
+    line-height: 1.4;
+  }
+  .gal-sub {
+    font-size: 11px;
+    color: var(--teal-glow);
+    margin-top: 3px;
+    font-style: italic;
+  }
+ 
+  /* Ícone de zoom no canto */
+  .gal-zoom {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 28px; height: 28px;
+    background: rgba(6,24,26,0.6);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 14px; color: var(--teal-glow);
+  }
+  .gal-item:hover .gal-zoom { opacity: 1; }
+ 
+  /* Placeholder enquanto foto não existe */
+  .gal-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px;
+    color: var(--text-dim);
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    text-align: center;
+    padding: 12px;
+  }
+  .gal-placeholder-icon { font-size: 28px; opacity: 0.4; }
+ 
+  /* Legenda abaixo do grid */
+  .gal-note {
+    margin-top: 14px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+    text-align: center;
+  }
+ 
+  /* ══════════════════════════════════
+     LIGHTBOX
+  ══════════════════════════════════ */
+  #lb {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(4, 14, 16, 0.96);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  #lb.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+ 
+  #lb-inner {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+ 
+  #lb-img {
+    max-width: 88vw;
+    max-height: 78vh;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    display: block;
+    transition: opacity 0.2s ease;
+  }
+  #lb-img.fading { opacity: 0; }
+ 
+  #lb-caption {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+  #lb-counter {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+ 
+  /* Botão fechar */
+  #lb-close {
+    position: fixed; top: 20px; right: 24px;
+    width: 36px; height: 36px;
+    background: rgba(13,53,64,0.8);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+    font-family: sans-serif; line-height: 1;
+  }
+  #lb-close:hover { background: rgba(42,184,160,0.2); }
+ 
+  /* Botões prev/next */
+  .lb-nav {
+    position: fixed;
+    top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px;
+    background: rgba(13,53,64,0.75);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--teal-bright);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, color 0.15s;
+    user-select: none;
+  }
+  .lb-nav:hover { background: rgba(42,184,160,0.15); color: var(--teal-glow); }
+  #lb-prev { left: 16px; }
+  #lb-next { right: 16px; }
+ 
+  /* Tecla ESC hint */
+  #lb-esc {
+    position: fixed; bottom: 18px;
+    font-size: 11px; color: var(--text-dim);
+    font-family: 'Barlow', sans-serif;
+    font-style: italic; letter-spacing: 0.5px;
+    pointer-events: none;
+  }
+ 
+  @media (max-width: 640px) {
+    .gal-grid { grid-template-columns: 1fr 1fr; }
+    .gal-item.featured { grid-column: span 2; }
+    .gallery-section { padding: 40px 20px; }
+    #lb-prev { left: 6px; }
+    #lb-next { right: 6px; }
+  }
+
 </style>
+
+ <!-- novo estilo -->
+ 
 </head>
-<body>
+<body style="background:#06242a; font-family:'Barlow',sans-serif;">
+
 <div class="page">
 
   <!-- HERO -->
@@ -682,8 +936,251 @@
       <span>Sponsored by Avenues São Paulo</span>
       <span>Supported by IQC — Instituto Questão de Ciência</span>
     </div>
+
+   <!-- nova seção -->
+   <section class="gallery-section">
+ 
+  <div class="section-header">
+    <div class="section-icon">📷</div>
+    <div class="section-title">Protótipo em ação</div>
+    <div class="section-line"></div>
+  </div>
+ 
+  <div class="gal-grid" id="gal-grid">
+ 
+    <!-- FOTO 1 — Destaque (ocupa 2 colunas) -->
+    <!-- Substitua src pela URL ou caminho da sua foto -->
+    <div class="gal-item featured"
+         data-full="assets/photos/board-full.jpg"
+         data-caption="Tabuleiro completo com os 6 biomas brasileiros"
+         data-sub="Sessão de playtest — LiliCon 2026">
+      <div class="gal-placeholder">
+        <div class="gal-placeholder-icon">🗺️</div>
+        <span>board-full.jpg<br>Tabuleiro completo</span>
+      </div>
+      <!-- Quando tiver a foto, substitua o div.gal-placeholder por:
+      <img src="assets/photos/board-full.jpg"
+           alt="Tabuleiro completo do SURTO! com os 6 biomas brasileiros"> -->
+      <div class="gal-overlay">
+        <div class="gal-caption">Tabuleiro completo com os 6 biomas</div>
+        <div class="gal-sub">Sessão de playtest — LiliCon 2026</div>
+      </div>
+      <div class="gal-zoom">⤢</div>
+    </div>
+ 
+    <!-- FOTO 2 -->
+    <div class="gal-item"
+         data-full="assets/photos/virus-card.jpg"
+         data-caption="Carta do jogador Vírus com marcadores de infecção"
+         data-sub="Protótipo ilustrado completo">
+      <div class="gal-placeholder">
+        <div class="gal-placeholder-icon">🦠</div>
+        <span>virus-card.jpg<br>Carta do Vírus</span>
+      </div>
+      <div class="gal-overlay">
+        <div class="gal-caption">Carta do jogador Vírus</div>
+        <div class="gal-sub">Com marcadores de infecção</div>
+      </div>
+      <div class="gal-zoom">⤢</div>
+    </div>
+ 
+    <!-- FOTO 3 -->
+    <div class="gal-item"
+         data-full="assets/photos/scientist-cards.jpg"
+         data-caption="Cartas dos cientistas: Médico e Pesquisadora"
+         data-sub="Cada personagem tem habilidades únicas">
+      <div class="gal-placeholder">
+        <div class="gal-placeholder-icon">🔬</div>
+        <span>scientist-cards.jpg<br>Cartas dos cientistas</span>
+      </div>
+      <div class="gal-overlay">
+        <div class="gal-caption">Cartas dos cientistas</div>
+        <div class="gal-sub">Médico e Pesquisadora</div>
+      </div>
+      <div class="gal-zoom">⤢</div>
+    </div>
+ 
+    <!-- FOTO 4 -->
+    <div class="gal-item"
+         data-full="assets/photos/flicc-cards.jpg"
+         data-caption="Cartas FLICC de desinformação — Breaking News"
+         data-sub="Fake Experts · Logical Fallacies · Cherry Picking">
+      <div class="gal-placeholder">
+        <div class="gal-placeholder-icon">📰</div>
+        <span>flicc-cards.jpg<br>Cartas FLICC</span>
+      </div>
+      <div class="gal-overlay">
+        <div class="gal-caption">Cartas Breaking News — FLICC</div>
+        <div class="gal-sub">Framework de pensamento crítico</div>
+      </div>
+      <div class="gal-zoom">⤢</div>
+    </div>
+ 
+    <!-- FOTO 5 -->
+    <div class="gal-item"
+         data-full="assets/photos/playtest-session.jpg"
+         data-caption="Sessão de playtest com alunos"
+         data-sub="Avenues São Paulo — 2026">
+      <div class="gal-placeholder">
+        <div class="gal-placeholder-icon">👥</div>
+        <span>playtest-session.jpg<br>Sessão de playtest</span>
+      </div>
+      <div class="gal-overlay">
+        <div class="gal-caption">Sessão de playtest com alunos</div>
+        <div class="gal-sub">Avenues São Paulo — 2026</div>
+      </div>
+      <div class="gal-zoom">⤢</div>
+    </div>
+ 
+    <!-- FOTO 6 -->
+    <div class="gal-item"
+         data-full="assets/photos/infection-markers.jpg"
+         data-caption="Marcadores de infecção espalhados pelo tabuleiro"
+         data-sub="O Vírus acumula pontos por território">
+      <div class="gal-placeholder">
+        <div class="gal-placeholder-icon">🔴</div>
+        <span>infection-markers.jpg<br>Marcadores de infecção</span>
+      </div>
+      <div class="gal-overlay">
+        <div class="gal-caption">Marcadores de infecção no tabuleiro</div>
+        <div class="gal-sub">1 ponto por território infectado</div>
+      </div>
+      <div class="gal-zoom">⤢</div>
+    </div>
+ 
+    <!-- FOTO 7 -->
+    <div class="gal-item"
+         data-full="assets/photos/research-cards.jpg"
+         data-caption="Cartas de Pesquisa coletadas pelos cientistas"
+         data-sub="3 cartas = 1 sintoma · 4 cartas = 1 transmissão">
+      <div class="gal-placeholder">
+        <div class="gal-placeholder-icon">🧪</div>
+        <span>research-cards.jpg<br>Cartas de pesquisa</span>
+      </div>
+      <div class="gal-overlay">
+        <div class="gal-caption">Cartas de Pesquisa</div>
+        <div class="gal-sub">3 = sintoma · 4 = transmissão</div>
+      </div>
+      <div class="gal-zoom">⤢</div>
+    </div>
+ 
+    <!-- FOTO 8 -->
+    <div class="gal-item"
+         data-full="assets/photos/box-art.jpg"
+         data-caption="Arte da caixa do SURTO! — protótipo"
+         data-sub="Ilustração completa com personagens">
+      <div class="gal-placeholder">
+        <div class="gal-placeholder-icon">📦</div>
+        <span>box-art.jpg<br>Arte da caixa</span>
+      </div>
+      <div class="gal-overlay">
+        <div class="gal-caption">Arte da caixa — protótipo</div>
+        <div class="gal-sub">Ilustração com personagens</div>
+      </div>
+      <div class="gal-zoom">⤢</div>
+    </div>
+ 
+  </div><!-- /gal-grid -->
+ 
+  <p class="gal-note">Clique em qualquer foto para ampliar · Use ← → ou as setas do teclado para navegar</p>
+ 
+</section>
+
   </footer>
 
 </div>
+ <script>
+(function () {
+  const lb      = document.getElementById('lb');
+  const lbImg   = document.getElementById('lb-img');
+  const lbCap   = document.getElementById('lb-caption');
+  const lbCount = document.getElementById('lb-counter');
+  const lbClose = document.getElementById('lb-close');
+  const lbPrev  = document.getElementById('lb-prev');
+  const lbNext  = document.getElementById('lb-next');
+ 
+  /* Coleta todos os itens da galeria que têm data-full */
+  const items = Array.from(
+    document.querySelectorAll('#gal-grid .gal-item[data-full]')
+  );
+ 
+  let current = 0;
+ 
+  function openLb(index) {
+    current = index;
+    showSlide(current);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+ 
+  function closeLb() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+ 
+  function showSlide(index) {
+    const item = items[index];
+    const src  = item.dataset.full;
+    const cap  = item.dataset.caption || '';
+    const sub  = item.dataset.sub || '';
+ 
+    /* Fade rápido na troca de imagem */
+    lbImg.classList.add('fading');
+    setTimeout(function () {
+      lbImg.src = src;
+      lbImg.alt = cap;
+      lbCap.textContent = cap + (sub ? ' — ' + sub : '');
+      lbCount.textContent = (index + 1) + ' / ' + items.length;
+      lbImg.classList.remove('fading');
+    }, 180);
+  }
+ 
+  function prev() {
+    current = (current - 1 + items.length) % items.length;
+    showSlide(current);
+  }
+ 
+  function next() {
+    current = (current + 1) % items.length;
+    showSlide(current);
+  }
+ 
+  /* Clique nos itens da galeria */
+  items.forEach(function (item, i) {
+    item.addEventListener('click', function () { openLb(i); });
+  });
+ 
+  /* Controles do lightbox */
+  lbClose.addEventListener('click', closeLb);
+  lbPrev.addEventListener('click', prev);
+  lbNext.addEventListener('click', next);
+ 
+  /* Clique fora da imagem fecha */
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb) closeLb();
+  });
+ 
+  /* Teclado */
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')      closeLb();
+    if (e.key === 'ArrowLeft')   prev();
+    if (e.key === 'ArrowRight')  next();
+  });
+ 
+  /* Swipe touch (mobile) */
+  var touchStartX = 0;
+  lb.addEventListener('touchstart', function (e) {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  lb.addEventListener('touchend', function (e) {
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) { dx < 0 ? next() : prev(); }
+  }, { passive: true });
+ 
+})();
+</script>
+
 </body>
 </html>
